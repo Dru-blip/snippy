@@ -1,4 +1,11 @@
-import { FolderClosedIcon, Inbox, Plus, ShoppingBasketIcon, StarIcon } from "lucide-react";
+import {
+  FolderClosedIcon,
+  Inbox,
+  Plus,
+  ShoppingBasketIcon,
+  StarIcon,
+  TrashIcon,
+} from "lucide-react";
 
 import {
   Sidebar,
@@ -11,7 +18,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
-import { NavLink } from "react-router";
+import { NavLink, useLocation } from "react-router";
 import { useLiveQuery } from "dexie-react-hooks";
 import { db } from "@/lib/db";
 import { AddFolderDialog } from "@/components/add-folder";
@@ -32,6 +39,11 @@ const items = [
     url: "/favorites",
     icon: StarIcon,
   },
+  {
+    title: "Trash",
+    url: "/trash",
+    icon: TrashIcon,
+  },
 ];
 
 export function AppSidebar() {
@@ -39,6 +51,7 @@ export function AppSidebar() {
     const folders = await db.folders.toArray();
     return folders;
   }, []);
+  const location = useLocation();
   return (
     <Sidebar>
       <SidebarContent>
@@ -48,7 +61,10 @@ export function AppSidebar() {
             <SidebarMenu>
               {items.map((item) => (
                 <SidebarMenuItem key={item.title}>
-                  <SidebarMenuButton asChild>
+                  <SidebarMenuButton
+                    asChild
+                    isActive={location.pathname === item.url}
+                  >
                     <NavLink to={item.url}>
                       <item.icon />
                       <span>{item.title}</span>
@@ -70,9 +86,12 @@ export function AppSidebar() {
             <SidebarMenu>
               {folders?.map((folder) => (
                 <SidebarMenuItem key={folder.name}>
-                  <SidebarMenuButton asChild>
+                  <SidebarMenuButton
+                    asChild
+                    isActive={location.pathname === `/folders/${folder.name}`}
+                  >
                     <NavLink to={`/folders/${folder.name}`}>
-                      <FolderClosedIcon/>
+                      <FolderClosedIcon />
                       <span>{folder.name}</span>
                     </NavLink>
                   </SidebarMenuButton>

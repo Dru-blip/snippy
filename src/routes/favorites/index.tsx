@@ -3,11 +3,11 @@ import { db } from "@/lib/db";
 
 export const Favorites = () => {
   const fetcher = async () => {
-    const snippets = await db.snippets
+    const snippets = db.snippets
       .where("favorite")
       .equals(1)
-      .toArray();
-    return snippets;
+      .and((snippet) => !snippet.inTrash);
+    return await snippets.toArray();
   };
   return (
     <SnippetsPanel folderName="inbox" fetcher={{ fn: fetcher, deps: [] }} />

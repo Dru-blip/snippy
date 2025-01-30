@@ -3,6 +3,7 @@ import SearchableSelect from "./searchable-select";
 import { langNames, LanguageName } from "@uiw/codemirror-extensions-langs";
 import { useEffect, useMemo, useState } from "react";
 import { db } from "@/lib/db";
+import { format } from "date-fns";
 
 interface Props {
   snippet: Snippet;
@@ -26,23 +27,28 @@ export const SnippetEditorFooter = ({ snippet }: Props) => {
   }, [snippet]);
   return (
     <div className="px-4 py-2 border-t flex-none">
-      <SearchableSelect
-        className="w-[200px]"
-        options={langCollection}
-        value={language}
-        onChange={async (val) => {
-          console.log(val);
-          setLanguage(val as LanguageName);
-          try {
-            await db.snippets.update(snippet.id, { language: val });
-          } catch (error) {}
-        }}
-        open={open}
-        onOpenChange={setOpen}
-        // label="Select language"
-        placeholder="Choose a language"
-        searchPlaceholder="Search language..."
-      />
+      <div className="flex items-center justify-between">
+        <SearchableSelect
+          className="w-[200px]"
+          options={langCollection}
+          value={language}
+          onChange={async (val) => {
+            console.log(val);
+            setLanguage(val as LanguageName);
+            try {
+              await db.snippets.update(snippet.id, { language: val });
+            } catch (error) {}
+          }}
+          open={open}
+          onOpenChange={setOpen}
+          // label="Select language"
+          placeholder="Choose a language"
+          searchPlaceholder="Search language..."
+        />
+        <div>
+          <p>{format(snippet.createdAt, "Pp")}</p>
+        </div>
+      </div>
     </div>
   );
 };

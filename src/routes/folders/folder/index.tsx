@@ -8,6 +8,7 @@ export const FolderPage = () => {
     const snippets = await db.snippets
       .where("folderName")
       .equals(params.name!)
+      .filter((snippet) => !snippet.inTrash)
       .toArray();
     return snippets;
   };

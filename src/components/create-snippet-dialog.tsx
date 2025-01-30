@@ -34,7 +34,7 @@ export const CreateSnippetDialog = ({ children, folderName }: Props) => {
         createdAt: new Date(),
         language,
         favorite:0,
-        inTrash:false
+        inTrash:0
       });
       toast.success("snippet created");
     } catch (error) {

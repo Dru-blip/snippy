@@ -4,6 +4,7 @@ import { AppLayout } from "./layout";
 import { AllSnippets } from "./all";
 import { Favorites } from "./favorites";
 import { FolderPage } from "./folders/folder";
+import { Trash } from "./trash";
 
 export const AppRouter = () => {
   return (
@@ -12,6 +13,7 @@ export const AppRouter = () => {
         <Route index element={<Inbox />} />
         <Route path="all" element={<AllSnippets/>}/>
         <Route path="favorites" element={<Favorites/>}/>
+        <Route path="trash" element={<Trash/>}/>
         <Route path="folders">
           <Route path=":name" element={<FolderPage/>}/>
         </Route>

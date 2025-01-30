@@ -15,5 +15,10 @@ export interface Snippet {
   folderName: string;
   createdAt: Date;
   favorite:0|1
-  inTrash:boolean
+  inTrash:0|1
+}
+
+export interface Tag{
+  id:number
+  name:string
 }

@@ -1,17 +1,17 @@
-import { Snippet } from "@/types";
-import { format } from "date-fns";
-import { useEffect, useState } from "react";
-import { Input } from "./ui/input";
-import { toast } from "sonner";
 import { db } from "@/lib/db";
+import { Snippet } from "@/types";
+import { useEffect, useState } from "react";
+import { toast } from "sonner";
 import { AddToFavorite } from "./add-to-favorites";
+import { Input, InputBlock } from "./ui/input-block";
+import { Button } from "./ui/button";
+import { TrashIcon } from "lucide-react";
 
 interface Props {
   snippet: Snippet;
 }
 
 export const SnippetEditorHeader = ({ snippet }: Props) => {
-  const [toggle, setToggle] = useState<boolean>(false);
   const [name, setName] = useState<string>();
 
   const changeName = async () => {
@@ -27,7 +27,7 @@ export const SnippetEditorHeader = ({ snippet }: Props) => {
   }, [snippet]);
   return (
     <div className="flex items-center justify-between px-4 py-2 border-b flex-none">
-      {toggle ? (
+      <InputBlock className="w-[300px]" variant={"ghost"}>
         <Input
           className="w-[300px]"
           value={name}
@@ -37,25 +37,14 @@ export const SnippetEditorHeader = ({ snippet }: Props) => {
           onKeyDown={(event) => {
             if (event.key === "Enter" || event.key === "Escape") {
               changeName();
-              setToggle(false);
               event.preventDefault();
               event.stopPropagation();
             }
           }}
         />
-      ) : (
-        <p
-          className="underline"
-          onClick={() => {
-            setToggle(true);
-          }}
-        >
-          {name}
-        </p>
-      )}
+      </InputBlock>
       <div className="flex items-center">
         <AddToFavorite />
-        <p>{format(snippet.createdAt, "Pp")}</p>
       </div>
     </div>
   );
