@@ -1,4 +1,4 @@
-import { selectedSnippetAtom } from "@/stores";
+import { searchQueryAtom, selectedSnippetAtom } from "@/stores";
 import { Snippet } from "@/types";
 import { useLiveQuery } from "dexie-react-hooks";
 import { useSetAtom } from "jotai";
@@ -25,6 +25,7 @@ export const SnippetsPanel = ({ folderName, fetcher }: Props) => {
   const snippets = useLiveQuery(fetcher?.fn!, fetcher?.deps);
   const setSnippet = useSetAtom(selectedSnippetAtom);
   const params = useParams();
+  const setQuery=useSetAtom(searchQueryAtom)
 
   useEffect(() => {
     setSnippet(null);
@@ -51,7 +52,7 @@ export const SnippetsPanel = ({ folderName, fetcher }: Props) => {
             <Input
               placeholder="search"
               onChange={(e) => {
-                console.log(e.target.value);
+                setQuery(e.target.value)
               }}
             />
           </InputBlock>

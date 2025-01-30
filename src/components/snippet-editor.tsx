@@ -58,7 +58,6 @@ export const SnippetEditor = () => {
                 extensions={[loadLanguage(language)!]}
                 onChange={onChange}
                 theme={darkTheme}
-                
               />
             </div>
           </div>
