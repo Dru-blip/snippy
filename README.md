@@ -6,6 +6,11 @@ A cross-platform code snippet management application built with Rust and Tauri.
 ✅ Store, organize, and manage code snippets efficiently  
 ✅ Multi-language syntax highlighting  
 
+## To-Do
+- [ ] Add Database
+- [ ] Synchronization
+- [ ] Tag System
+- [ ] Advanced Search and Filtering
 
 ## Technologies Used
 - **Frontend:** Tauri, Svelte
